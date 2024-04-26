@@ -54,10 +54,17 @@
 		width: 100%;
 		white-space: nowrap;
 		text-align: center;
+		text-decoration: none;
 
 		&:hover,
 		&:focus {
+			transition: color 0.25s ease-in-out;
 			color: var(--wpe--navigation-menu--color--hover);
+
+			svg {
+				transition: fill 0.25s ease-in-out;
+				fill: var(--wpe--navigation-menu--color--hover);
+			}
 		}
 
 		// Remove link underline when component is inside header.
