@@ -31,12 +31,8 @@
 
 .title {
 	line-height: 1.25;
-	font-size: 2rem;
+	font-size: clamp(1.375rem, 1.375rem + 2.8889vw, 3rem);
 	color: var(--wpe--color--title);
-
-	@media (max-width: $breakpoint-small) {
-		font-size: 1.5rem;
-	}
 }
 
 .byline {
