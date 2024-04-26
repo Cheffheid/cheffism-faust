@@ -23,3 +23,11 @@
 		}
 	}
 }
+
+.active {
+
+	text-decoration: underline;
+	text-underline-offset: 10px;
+	text-decoration-thickness: 3px;
+	text-decoration-color: var(--wpe--color--accent);
+}

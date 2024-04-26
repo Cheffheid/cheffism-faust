@@ -5,6 +5,7 @@ import * as ICONS from "../../constants/icons";
 import styles from "./NavigationMenu.module.scss";
 import stylesFromWP from "./NavigationMenuClassesFromWP.module.scss";
 import { flatListToHierarchical } from "@faustwp/core";
+import { usePathname } from "next/navigation";
 
 let cx = classNames.bind(styles);
 let cxFromWp = classNames.bind(stylesFromWP);
@@ -17,6 +18,7 @@ export default function NavigationMenu({ menuItems, className, iconMenu }) {
   // Based on https://www.wpgraphql.com/docs/menus/#hierarchical-data
   const hierarchicalMenuItems = flatListToHierarchical(menuItems);
   const icons = Object.keys(ICONS.SOCIAL_ICONS);
+  const pathname = usePathname();
 
   function renderMenu(items) {
     return (
@@ -24,6 +26,7 @@ export default function NavigationMenu({ menuItems, className, iconMenu }) {
         {items.map((item) => {
           const { id, path, label, children, cssClasses, target } = item;
           const isExternal = "_blank" === target;
+          let activeClass = "";
 
           let linkText = label ?? "";
 
@@ -46,8 +49,12 @@ export default function NavigationMenu({ menuItems, className, iconMenu }) {
             }
           }
 
+          if ("/" !== pathname && path.startsWith(pathname)) {
+            activeClass = "active";
+          }
+
           return (
-            <li key={id} className={cxFromWp(cssClasses)}>
+            <li key={id} className={cxFromWp(cssClasses, activeClass)}>
               {isExternal ? (
                 <a href={path ?? ""} target={target}>
                   {linkText}
