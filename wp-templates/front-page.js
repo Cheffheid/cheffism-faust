@@ -34,7 +34,10 @@ export default function Component() {
             </div>
           </Hero>
           <NavigationMenu menuItems={socialMenu} iconMenu={true} />
-          <NavigationMenu menuItems={primaryMenu} className="primary-menu" />
+          <NavigationMenu
+            menuItems={primaryMenu}
+            className="primary-menu-home"
+          />
         </Container>
         <Footer title={siteTitle} />
       </Main>
