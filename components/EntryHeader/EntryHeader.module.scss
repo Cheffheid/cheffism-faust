@@ -4,10 +4,10 @@
 	color: var(--wpe--color--white);
 	position: relative;
 	overflow: hidden;
-	margin-bottom: 2rem;
+	margin-bottom: 1rem;
 
 	@media (min-width: $breakpoint-small) {
-		margin-bottom: 5rem;
+		margin-bottom: 3rem;
 	}
 }
 
@@ -24,18 +24,18 @@
 .text {
 	width: 100%;
 	max-width: 72rem;
-	padding: 8.25rem 0;
+	padding: 1rem 0;
 	position: relative;
 	z-index: 1; // Pull text to the foreground to sit above <FeaturedImage />.
 }
 
 .title {
 	line-height: 1.25;
-	font-size: 5rem;
+	font-size: 2rem;
 	color: var(--wpe--color--title);
 
 	@media (max-width: $breakpoint-small) {
-		font-size: 3rem;
+		font-size: 1.5rem;
 	}
 }
 
