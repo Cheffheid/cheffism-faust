@@ -7,6 +7,7 @@ import stylesFromWP from "./NavigationMenuClassesFromWP.module.scss";
 import { flatListToHierarchical } from "@faustwp/core";
 
 let cx = classNames.bind(styles);
+let cxFromWp = classNames.bind(stylesFromWP);
 
 export default function NavigationMenu({ menuItems, className, iconMenu }) {
   if (!menuItems) {
@@ -46,7 +47,7 @@ export default function NavigationMenu({ menuItems, className, iconMenu }) {
           }
 
           return (
-            <li key={id} className={cx(cssClasses)}>
+            <li key={id} className={cxFromWp(cssClasses)}>
               {isExternal ? (
                 <a href={path ?? ""} target={target}>
                   {linkText}
