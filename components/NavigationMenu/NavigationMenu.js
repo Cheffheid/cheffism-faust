@@ -1,9 +1,9 @@
-import classNames from 'classnames/bind';
-import { gql } from '@apollo/client';
-import Link from 'next/link';
-import styles from './NavigationMenu.module.scss';
-import stylesFromWP from './NavigationMenuClassesFromWP.module.scss';
-import { flatListToHierarchical } from '@faustwp/core';
+import classNames from "classnames/bind";
+import { gql } from "@apollo/client";
+import Link from "next/link";
+import styles from "./NavigationMenu.module.scss";
+import stylesFromWP from "./NavigationMenuClassesFromWP.module.scss";
+import { flatListToHierarchical } from "@faustwp/core";
 
 let cx = classNames.bind(styles);
 let cxFromWp = classNames.bind(stylesFromWP);
@@ -18,18 +18,26 @@ export default function NavigationMenu({ menuItems, className }) {
 
   function renderMenu(items) {
     return (
-      <ul className={cx('menu')}>
+      <ul className={cx("menu")}>
         {items.map((item) => {
-          const { id, path, label, children, cssClasses } = item;
+          const { id, path, label, children, cssClasses, target } = item;
+          const isExternal = "_blank" === target;
 
           // @TODO - Remove guard clause after ghost menu items are no longer appended to array.
-          if (!item.hasOwnProperty('__typename')) {
+          if (!item.hasOwnProperty("__typename")) {
             return null;
           }
 
           return (
             <li key={id} className={cxFromWp(cssClasses)}>
-              <Link href={path ?? ''}>{label ?? ''}</Link>
+              {isExternal ? (
+                <a href={path ?? ""} target={target}>
+                  {label ?? ""}
+                </a>
+              ) : (
+                <Link href={path ?? ""}>{label ?? ""}</Link>
+              )}
+
               {children.length ? renderMenu(children) : null}
             </li>
           );
@@ -40,9 +48,10 @@ export default function NavigationMenu({ menuItems, className }) {
 
   return (
     <nav
-      className={cx(['component', className])}
+      className={cx(["component", className])}
       role="navigation"
-      aria-label={`${menuItems[0]?.menu?.node?.name} menu`}>
+      aria-label={`${menuItems[0]?.menu?.node?.name} menu`}
+    >
       {renderMenu(hierarchicalMenuItems)}
     </nav>
   );
@@ -56,6 +65,7 @@ NavigationMenu.fragments = {
       label
       parentId
       cssClasses
+      target
       menu {
         node {
           name
