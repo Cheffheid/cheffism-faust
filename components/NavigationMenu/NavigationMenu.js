@@ -24,38 +24,38 @@ export default function NavigationMenu({ menuItems, className, iconMenu }) {
           const { id, path, label, children, cssClasses, target } = item;
           const isExternal = "_blank" === target;
           const icons = ["twitter", "linkedin", "rss", "github"];
-          let icon = "";
+          let linkText = label ?? "";
 
           // @TODO - Remove guard clause after ghost menu items are no longer appended to array.
           if (!item.hasOwnProperty("__typename")) {
             return null;
           }
 
+          // Bail if we are trying to render an icon menu, but no icon classes exist on the link.
           if (iconMenu && !cssClasses.includes("icon")) {
             return null;
           }
 
           if (iconMenu) {
-            icon = cssClasses.filter((item) => icons.includes(item));
+            const icon = cssClasses.filter((item) => icons.includes(item));
+            linkText = (
+              <Image
+                src={`/img/${icon}.svg`}
+                alt={label}
+                width="25"
+                height="25"
+              />
+            );
           }
 
           return (
             <li key={id} className={cxFromWp(cssClasses)}>
               {isExternal ? (
                 <a href={path ?? ""} target={target}>
-                  {iconMenu ? (
-                    <Image
-                      src={`/img/${icon}.svg`}
-                      alt={label}
-                      width="25"
-                      height="25"
-                    />
-                  ) : (
-                    <>{label}</>
-                  )}
+                  {linkText}
                 </a>
               ) : (
-                <Link href={path ?? ""}>{label ?? ""}</Link>
+                <Link href={path ?? ""}>{linkText}</Link>
               )}
 
               {children.length ? renderMenu(children) : null}
