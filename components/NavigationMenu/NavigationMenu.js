@@ -38,7 +38,11 @@ export default function NavigationMenu({ menuItems, className, iconMenu }) {
 
           if (iconMenu) {
             const icon = cssClasses.filter((item) => icons.includes(item));
-            linkText = ICONS.SOCIAL_ICONS[icon];
+
+            // Only override the linkText with the icon if we actually have it.
+            if (ICONS.SOCIAL_ICONS.hasOwnProperty(icon)) {
+              linkText = ICONS.SOCIAL_ICONS[icon];
+            }
           }
 
           return (
