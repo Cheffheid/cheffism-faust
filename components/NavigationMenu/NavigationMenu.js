@@ -1,13 +1,12 @@
 import classNames from "classnames/bind";
 import { gql } from "@apollo/client";
 import Link from "next/link";
-import Image from "next/image";
+import * as ICONS from "../../constants/icons";
 import styles from "./NavigationMenu.module.scss";
 import stylesFromWP from "./NavigationMenuClassesFromWP.module.scss";
 import { flatListToHierarchical } from "@faustwp/core";
 
 let cx = classNames.bind(styles);
-let cxFromWp = classNames.bind(stylesFromWP);
 
 export default function NavigationMenu({ menuItems, className, iconMenu }) {
   if (!menuItems) {
@@ -16,6 +15,7 @@ export default function NavigationMenu({ menuItems, className, iconMenu }) {
 
   // Based on https://www.wpgraphql.com/docs/menus/#hierarchical-data
   const hierarchicalMenuItems = flatListToHierarchical(menuItems);
+  const icons = Object.keys(ICONS.SOCIAL_ICONS);
 
   function renderMenu(items) {
     return (
@@ -23,7 +23,7 @@ export default function NavigationMenu({ menuItems, className, iconMenu }) {
         {items.map((item) => {
           const { id, path, label, children, cssClasses, target } = item;
           const isExternal = "_blank" === target;
-          const icons = ["twitter", "linkedin", "rss", "github"];
+
           let linkText = label ?? "";
 
           // @TODO - Remove guard clause after ghost menu items are no longer appended to array.
@@ -38,18 +38,11 @@ export default function NavigationMenu({ menuItems, className, iconMenu }) {
 
           if (iconMenu) {
             const icon = cssClasses.filter((item) => icons.includes(item));
-            linkText = (
-              <Image
-                src={`/img/${icon}.svg`}
-                alt={label}
-                width="25"
-                height="25"
-              />
-            );
+            linkText = ICONS.SOCIAL_ICONS[icon];
           }
 
           return (
-            <li key={id} className={cxFromWp(cssClasses)}>
+            <li key={id} className={cx(cssClasses)}>
               {isExternal ? (
                 <a href={path ?? ""} target={target}>
                   {linkText}
